@@ -138,6 +138,57 @@ services:
 
 3. **架构兼容性**：镜像支持 AMD64 和 ARM64 架构，Docker 会自动选择对应架构的镜像
 
+## 🔧 CORS 配置（短链接服务）
+
+如果您使用自定义短链接服务，需要在短链接服务的 Nginx 配置中添加 CORS 头，否则浏览器会阻止跨域请求。
+
+### Nginx 配置示例
+
+在您的短链接服务的 Nginx server 块中添加以下配置：
+
+```nginx
+location / {
+    # 添加 CORS 头
+    add_header 'Access-Control-Allow-Origin' '*' always;
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+    add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization' always;
+    
+    # 处理 OPTIONS 预检请求
+    if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Content-Type, Authorization';
+        add_header 'Content-Length' 0;
+        add_header 'Content-Type' 'text/plain';
+        return 204;
+    }
+    
+    # 你的其他配置（如 proxy_pass 等）
+    # ...
+}
+```
+
+### 配置说明
+
+- `Access-Control-Allow-Origin: *` - 允许所有域名访问（生产环境建议改为具体域名）
+- `Access-Control-Allow-Methods` - 允许的 HTTP 方法
+- `Access-Control-Allow-Headers` - 允许的请求头
+- `always` 标志 - 确保即使在错误响应中也添加 CORS 头
+
+### 应用配置
+
+修改配置后，重载 Nginx：
+
+```bash
+# 测试配置
+nginx -t
+
+# 重载配置
+nginx -s reload
+# 或
+systemctl reload nginx
+```
+
 ## 🙏 致谢
 
 - 原项目作者：[youshandefeiyang](https://github.com/youshandefeiyang)
