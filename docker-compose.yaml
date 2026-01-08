@@ -1,0 +1,15 @@
+services:
+  sub-web-modify:
+    image: zzhorc/sub-web-modify:latest
+    container_name: sub-web-modify
+    restart: always
+    ports:
+      - "58080:80"
+    environment:
+      # 订阅转换后端地址
+      - VUE_APP_SUBCONVERTER_DEFAULT_BACKEND=https://subc.zzh.wtf
+      # 短链接服务地址
+      - VUE_APP_MYURLS_DEFAULT_BACKEND=https://s.zzh.wtf
+      # 配置上传后端地址（可选，如果不需要可以注释掉）
+      # - VUE_APP_CONFIG_UPLOAD_BACKEND=https://subapi.v1.mk
+
