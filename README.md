@@ -26,12 +26,6 @@
 > 基于 [youshandefeiyang/sub-web-modify](https://github.com/youshandefeiyang/sub-web-modify) 修改  
 > 原项目基于 [CareyWang/sub-web](https://github.com/CareyWang/sub-web)
 
-## 📍 About
-
-**在线演示**: [https://subweb.zzh.wtf/](https://subweb.zzh.wtf/)
-
-本项目是基于 sub-web-modify 的自用修改版本，主要增加了运行时环境变量配置支持和去除广告功能。
-
 ## ✨ 主要修改
 
 相比原项目，本版本做了以下改进：
